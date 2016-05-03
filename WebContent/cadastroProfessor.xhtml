@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8" />
+	<style>
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: floralwhite;
+}
+
+a {
+	margin-bottom: 10px;
+	text-decoration: none;
+	color: white;
+	font-family: sans-serif;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+#voltar {
+	text-align: center;
+	width: 100%;
+	background-color: darkgreen;
+	padding: 10px 0px 10px 0px;
+	margin-top: 30px;
+	position: absolute;
+}
+</style>
+</h:head>
+<h:body>
+	<center>
+		<h1
+			style="color: forestgreen; font-family: sans-serif; text-align: center; text-decoration: inherit; letter-spacing: 1px; font-size: 24px; margin-top: 20px;">
+			Cadastro de Professor</h1>
+		<h:form id="formProfessor">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Numero: " />
+				<p:inputText value="#{professorManagedBean.professor.numero}" />
+				<p:outputLabel value="Nome: " />
+				<p:inputText value="#{professorManagedBean.professor.nome}" />
+
+
+
+
+			</p:panelGrid>
+			<p:commandButton value="Salvar"
+				action="#{professorManagedBean.salvar}"
+				update=":formProfessor, :formTableProfessor" disabled="false"
+				style="
+                	margin-top: 10px;
+                	margin-bottom: 10px;" />
+
+			<p:commandButton value="Pesquisar"
+				action="#{professorManagedBean.pesquisar}"
+				update=":formProfessor, :formTableProfessor" disabled="false" />
+
+			<p:commandButton value="Alterar"
+				action="#{professorManagedBean.alterar}"
+				update=":formProfessor, :formTableProfessor" disabled="false" />
+
+			<p:commandButton value="Excluir"
+				action="#{professorManagedBean.excluir}"
+				update=":formProfessor, :formTableProfessor" disabled="false" />
+
+		</h:form>
+	</center>
+	<h:form id="formTableProfessor">
+		<p:dataTable id="tableProfessor"
+			value="#{professorManagedBean.professores}" var="po" editable="true"
+			selectionMode="single" selection="#{professorManagedBean.profSelect}"
+			rowKey="#{po.numero}">
+			<p:column headerText="Numero">
+				<p:outputLabel value="#{po.numero}" />
+			</p:column>
+			<p:column headerText="Nome">
+				<p:outputLabel value="#{po.nome}" />
+			</p:column>
+
+			<p:column style="width:70px" headerText="Opções">
+				<p:commandLink id="novoCurso"
+					styleClass="ui-icon  ui-icon-circle-plus" style="text-align:center"
+					onclick="PF('dlgAddCurso').show();"
+					update=":formTableProfessor, :formPickList "
+					actionListener="#{professorManagedBean.addCursoToProfessor(po)}" />
+			</p:column>
+
+		</p:dataTable>
+
+
+	</h:form>
+
+	<p:dialog header="Seleção de Curso" widgetVar="dlgAddCurso"
+		modal="true" height="400" width="800">
+		<h:outputText value="Selecione um ou mais curso" />
+		<h:form id="formPickList">
+			<p:pickList id="pickListProfessor"
+				value="#{professorManagedBean.cursos}" var="f" itemLabel="#{f.nome}"
+				itemValue="#{f}" converter="ConverterCurso">
+				<f:facet name="sourceCaption">Disponíveis</f:facet>
+				<f:facet name="targetCaption">Associados</f:facet>
+			</p:pickList>
+			<p:commandButton value="Salvar"
+				action="#{professorManagedBean.associar}"
+				onclick="dlgAddCurso.hide();" />
+		</h:form>
+	</p:dialog>
+
+	<a href="../index.html"><div id="voltar">Voltar</div></a>
+	
+</h:body>
+</html>
+
+
+
+

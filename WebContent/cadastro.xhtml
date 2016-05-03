@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8" />
+	<style>
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: floralwhite;
+}
+
+a {
+	margin-bottom: 10px;
+	text-decoration: none;
+	color: white;
+	font-family: sans-serif;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+#voltar {
+	text-align: center;
+	width: 100%;
+	background-color: darkgreen;
+	padding: 10px 0px 10px 0px;
+	margin-top: 30px;
+	position: absolute;
+}
+</style>
+</h:head>
+<h:body>
+	<h1
+		style="color: forestgreen; font-family: sans-serif; text-align: center; text-decoration: inherit; letter-spacing: 1px; font-size: 24px; margin-top: 10px;">
+		Cadastro de Aluno</h1>
+	<center>
+		<h:form id="formAluno">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Matrícula: " />
+				<p:inputText value="#{alunoManagedBean.aluno.matricula}" />
+				<p:outputLabel value="Nome: " />
+				<p:inputText value="#{alunoManagedBean.aluno.nome}" />
+
+				<p:outputLabel for="curso" value="Curso:" />
+				<p:selectOneMenu id="curso" value="#{alunoManagedBean.curso}"
+					style="width:200px" converter="ConverterCurso">
+					<f:selectItem itemLabel="Selecione o Curso" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{alunoManagedBean.cursos}" var="aux"
+						itemValue="#{aux}" itemLabel="#{aux.nome}" />
+				</p:selectOneMenu>
+
+
+			</p:panelGrid>
+			<p:commandButton value="Salvar" action="#{alunoManagedBean.salvar}"
+				update=":formAluno, :tableAluno" disabled="false"
+				style="
+                	margin-top: 10px;
+                	margin-bottom: 10px;
+                	 " />
+
+			<p:commandButton value="Pesquisar"
+				action="#{alunoManagedBean.pesquisar}"
+				update=":formAluno, :tableAluno" disabled="false" />
+
+			<p:commandButton value="Alterar" action="#{alunoManagedBean.alterar}"
+				update=":formAluno, :tableAluno" disabled="false" />
+
+			<p:commandButton value="Excluir" action="#{alunoManagedBean.excluir}"
+				update=":formAluno, :tableAluno" disabled="false" />
+		</h:form>
+	</center>
+
+	<p:dataTable id="tableAluno" value="#{alunoManagedBean.alunos}"
+		var="alu">
+		<p:column headerText="Matrícula">
+			<p:outputLabel value="#{alu.matricula}" />
+		</p:column>
+		<p:column headerText="Nome">
+			<p:outputLabel value="#{alu.nome}" />
+		</p:column>
+		<p:column headerText="Curso">
+			<p:outputLabel value="#{alu.curso.nome}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<a href="../index.html"><div id="voltar">Voltar</div></a>
+
+</h:body>
+</html>
+
+
+
+

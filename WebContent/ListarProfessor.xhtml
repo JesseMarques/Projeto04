@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta charset="UTF-8" />
+	<style>
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: floralwhite;
+}
+
+a {
+	margin-bottom: 10px;
+	text-decoration: none;
+	color: white;
+	font-family: sans-serif;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+#voltar {
+	text-align: center;
+	width: 100%;
+	background-color: darkgreen;
+	padding: 10px 0px 10px 0px;
+	margin-top: 30px;
+	position: absolute;
+}
+</style>
+</h:head>
+<h:body>
+	<h1
+		style="color: forestgreen; font-family: sans-serif; text-align: center; text-decoration: inherit; letter-spacing: 1px; font-size: 24px; margin-top: 10px;">
+		Dados do Professor:</h1>
+	<center>
+		<h:form id="formProfessor">
+			<p:panelGrid columns="2">
+
+				<p:outputLabel for="curso" value="Professor:" />
+				<p:selectOneMenu id="curso"
+					value="#{professorManagedBean.professor}" style="width:200px"
+					converter="ConverterProfessor">
+					<f:selectItem itemLabel="Selecione o Curso" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{professorManagedBean.professores}"
+						var="aux" itemValue="#{aux}" itemLabel="#{aux.nome}" />
+				</p:selectOneMenu>
+
+
+			</p:panelGrid>
+
+			<p:commandButton value="Pesquisar"
+				action="#{professorManagedBean.PesquisarCurso}"
+				update=":formProfessor, :tableProfessor" disabled="false"
+				style="
+                	margin-top: 10px;
+                	margin-bottom: 10px;" />
+		</h:form>
+	</center>
+
+	<h1
+		style="color: forestgreen; font-family: sans-serif; text-align: center; text-decoration: inherit; letter-spacing: 1px; font-size: 24px; margin-top: 10px;">Cursos
+		Ministrado pelo Professor</h1>
+
+	<p:dataTable id="tableProfessor"
+		value="#{professorManagedBean.cursoProfessor}" var="cu">
+		<p:column headerText="Codigo">
+			<p:outputLabel value="#{cu.codigo}" />
+		</p:column>
+		<p:column headerText="Nome">
+			<p:outputLabel value="#{cu.nome}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<a href="../index.html"><div id="voltar">Voltar</div></a>
+
+</h:body>
+</html>
+
+
+
+
