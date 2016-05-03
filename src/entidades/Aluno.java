@@ -14,6 +14,7 @@ public class Aluno {
 	private String nome;
 	@ManyToOne
 	private Curso curso;
+	private String teste;
 
 	public Aluno(int matricula, String nome) {
 		super();
